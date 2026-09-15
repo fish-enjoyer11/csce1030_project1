@@ -15,8 +15,8 @@ student_gpas = { #default values for gpa, option 2 needs to be able to update th
     1004:3.0,
 }
 GRADE_BOUNDARIES = tuple([90.0, 80.0, 70.0, 60.0]) #create tuple for grade boundaries, i hope i did this right
-SCALED_GPAS = tuple([4.0, 3.0, 2.0, 1.0])         #this makes conversion easier, trust me
-GRADE_LETTERS = tuple(["A", "B", "C", "D", "F"]) #tuple for letter grades
+WEIGHTED_GPAS = tuple([4.0, 3.0, 2.0, 1.0])          #tuple for gpas on a 4.0 scale
+GRADE_LETTERS = tuple(["A", "B", "C", "D"]) #tuple for letter grades
 
 application_isactive = True #Set to true by default or else the program doesn't run :P
 
@@ -99,33 +99,27 @@ while application_isactive == True:
         if(user_input == 2): #BEGIN OPTION 2: Compute GPAs & Academic averages
 
             if student_grades: #by using student_grades as the if-check, it returns True if the dict contains items. If its empty, returns False
+
+                student_lettergrades = dict() #temporarily create empty dictionary to hold ID-lettergrade pairs
                 
                 for stud_id in student_grades:
 
                     gpa_avg = sum(student_grades[stud_id]) / len(student_grades[stud_id]) #calculate gpa in average form
 
-                    for (x) in SCALED_GPAS:
-                        if (gpa_avg < x):
-                            student_gpas[stud_id] = x
+                    for (i, cutoff) in enumerate(GRADE_BOUNDARIES): #i need to study this more
+                        if(gpa_avg >= cutoff): #example: if gpa_avg = 91 then 91 >= 90, student grade is 4.0 - 0 = 4.0
+                            student_gpas[stud_id] = (4.0 - i)
+                            student_lettergrades[stud_id] = GRADE_LETTERS[i] #this should get "A" for 0, "B" for 1, etc.
+                            break #break this for loop, or else it will eventually fail and produce an "F"
                         else:
-                            student_gpas[stud_id] = 0.0
+                            student_gpas[stud_id] = (0.0)
+                            student_lettergrades[stud_id] = "F" #start work from here later
 
-                            #FIXME I need to start from here next -Matthew
-
-                    #if(gpa_avg < 60.0): #big if branch to convert average form to the 0.0-4.0 scale.
-                    #    student_gpas[stud_id] = 0.0
-                    #elif(gpa_avg < 70.0):
-                    #    student_gpas[stud_id] = 1.0
-                    #elif(gpa_avg < 80.0):
-                    #    student_gpas[stud_id] = 2.0
-                    #elif(gpa_avg < 90.0):
-                    #    student_gpas[stud_id] = 3.0
-                    #else:
-                    #    student_gpas[stud_id] = 4.0
 
 
 
                 print(student_gpas)
+                print(student_lettergrades)
                 input()
             else: #since the program is initialized with grades, this should never happen
                 print("Student grades is empty.") 
