@@ -31,6 +31,9 @@ while application_isactive == True: #remember to use continue to skip the rest o
     elif(user_input in range(1,5)):   #this actually checks if its 1 through 4. The 5 at the end is exclusive.
         print("Successfully triggered a menu option")
 
+        if(user_input == 1): #Start here next, OPTION 1: VIEW ALL STUDENT RECORDS 
+            pass
+
         if(user_input == 2): #BEGIN OPTION 2: Add a new Student Record
 
             print("\n----Add New Student Record----\n")
@@ -39,19 +42,46 @@ while application_isactive == True: #remember to use continue to skip the rest o
 
             if new_id.isdigit() and (len(new_id) == 4): #if the user has input a valid id format
 
+                new_id = int(new_id)
                 print(new_id, "is valid")
 
                 new_name = input("Enter student's full name: ")
                 new_course = input("Enter enrolled course: ")
 
-                enrolled_courses.add(new_course.upper())
-                print(enrolled_courses)
+                num_scores_to_add = int( input("How many scores will be added? ") )
+
+                i = 1                   #use this to increment once each iteration until i = num_scores_to_add
+                new_grade_list = list() #list to hold each new grade entered
+
+                while i <= num_scores_to_add:
+                    try:
+                        new_grade_list.append(float( input(f"Enter score number {i}: ") ) ) #add each new entered grade to the end of the list
+                        i += 1 #increment i by 1 so we arent in a hell cycle
+                    except ValueError:
+                        print("Error: input type not accepted (floats only please)")
+                        continue
+
+                enrolled_courses.add(new_course.upper()) #add course to enrolled_courses set
 
 
-                if(int(new_id) not in student_ids): #check if the newly input id already exists
-                    print(f"{new_id} not present in list.")
-                else:
-                    print(f"{new_id} present in list.")
+
+                if(new_id not in student_ids): #check if the newly input id already exists
+                    print(f"{new_id} was not present, now adding.")
+                    student_ids.append(new_id)
+                    student_names.append(new_name)
+                    student_grades[new_id] = new_grade_list
+                    #debug statements
+                    print("New ID:", new_id)
+                    print("List of students:", student_names)
+                    print("Grades for", new_id, "are", student_grades[new_id])
+
+                else: #if id already exists, replace name and grades with input
+                    print(f"{new_id} present in list. Updating Entry.")
+                    student_names[student_ids.index(new_id)] = new_name
+                    student_grades[new_id] = new_grade_list
+                    #debug statements
+                    print(student_names)
+                    print("Grades for", new_id, "are", student_grades[new_id])
                 
 
             else:
