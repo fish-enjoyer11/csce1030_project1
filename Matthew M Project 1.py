@@ -20,6 +20,7 @@ GRADE_LETTERS = tuple(["A", "B", "C", "D"]) #tuple for letter grades
 
 application_isactive = True #Set to true by default or else the program doesn't run :P
 
+#A QUICK NOTE TO EVERYONE: please ONLY edit inside your option branch.
 
 while application_isactive == True: 
                             #this loop will repeat forever until the user inputs 0 at the main menu.
@@ -29,7 +30,14 @@ while application_isactive == True:
     
     print("\nMENU:\n\n1. Add New Student Record\n\n2. Compute GPAs & Academic Averages\n\n3. Display Grade Roster\n")
     print("4. Search for Student & Flag Academic Risk\n\n5. Class Statistics\n")
-    user_input = int(input("Select an option (1-5), 0 to exit: "))
+
+    while True: #this loop will repeat forever until the user enters a valid input
+        try: #try statements attempt to do whatever is inside them. if it gets the error expected in the except block, it will do that instead
+            user_input = int(input("Select an option (1-5), 0 to exit: "))
+            break      #this lets us escape the infinite loop caused by writing " while True: "
+        except ValueError:
+            print("ERROR: Invalid Command")
+
 
     if(user_input == 0):              #this is our input check. start by checking if its the exit command.
         application_isactive = False
@@ -37,7 +45,7 @@ while application_isactive == True:
 
         print("Successfully triggered a menu option") #this is just a debug message to make sure the menu works
 
-        if(user_input == 1): #BEGIN OPTION 1: Add a new Student Record
+        if(user_input == 1): #BEGIN OPTION 1: Add a New Student Record - Matthew Meinhart
 
             print("\n----Add New Student Record----\n")
 
@@ -80,8 +88,8 @@ while application_isactive == True:
                     print("New ID:", new_id)
                     print("List of students:", student_names)
                     print("Grades for", new_id, "are", student_grades[new_id])
-                    input() #we can use input() on its own as a sort of "pause button" to make the program wait for input before continuing
-                            #do that if you feel like the user needs to see whats going on before the program continues.
+                    input("Press any key") #we can use input() on its own as a sort of "pause button" to make the program wait for input before continuing
+                                           #do that if you feel like the user needs to see whats going on before the program continues.
 
                 else: #if id already exists, replace name and grades with input
                     print(f"{new_id} present in list. No changes will be made.")
@@ -90,14 +98,14 @@ while application_isactive == True:
                     #debug statements
                     print("List of students:", student_names)
                     print("Grades for", new_id, "are", student_grades[new_id])
-                    input()
+                    input("Press any key")
                 
 
             else:
                 print(f"ERROR: {new_id} not a valid ID")
 
-        if(user_input == 2): #BEGIN OPTION 2: Compute GPAs & Academic averages
-
+        if(user_input == 2): #BEGIN OPTION 2: Compute GPAs & Academic Averages - Matthew Meinhart
+            #I'm still working on this, it's not finished yet
             if student_grades: #by using student_grades as the if-check, it returns True if the dict contains items. If its empty, returns False
 
                 student_lettergrades = dict() #temporarily create empty dictionary to hold ID-lettergrade pairs
@@ -120,13 +128,38 @@ while application_isactive == True:
 
                 print(student_gpas)
                 print(student_lettergrades)
-                input()
+
             else: #since the program is initialized with grades, this should never happen
                 print("Student grades is empty.") 
-                input()
+
+        if(user_input == 3): #BEGIN OPTION 3: Display Formatted Grade  - your name here
+
+            #your code goes here. please only edit inside of your option, so that merging everyone's versions is seamless.
+            #please verify that your option works before submitting it to the Github page.
+            #don't forget to double check your indentation so that everything is contained correctly.
+            #you may delete this comment block if you want to.
+            pass #pass just tells the program to do nothing. delete it if you want to.
+
+        if(user_input == 4): #BEGIN OPTION 4: Search Student & Flag Academic Risk - your name here
+            
+            #your code goes here. please only edit inside of your option, so that merging everyone's versions is seamless.
+            #please verify that your option works before submitting it to the Github page.
+            #don't forget to double check your indentation so that everything is contained correctly.
+            #you may delete this comment block if you want to.
+            pass #pass just tells the program to do nothing. delete it if you want to.
+        
+        if(user_input == 5): #BEGIN OPTION 5: Class Statistics & High/Low Analysis - your name here
+            
+            #your code goes here. please only edit inside of your option, so that merging everyone's versions is seamless.
+            #please verify that your option works before submitting it to the Github page.
+            #don't forget to double check your indentation so that everything is contained correctly.
+            #you may delete this comment block if you want to.
+            pass #pass just tells the program to do nothing. delete it if you want to.
 
     else:
         print(f"ERROR: {user_input} is not a valid input.")
+
+    input("\nPress any key to continue: ")
 
 
 #if we get here, presumably we have broken the while loop
