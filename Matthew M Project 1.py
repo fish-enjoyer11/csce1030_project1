@@ -45,7 +45,7 @@ while application_isactive == True:
 
         print("Successfully triggered a menu option") #this is just a debug message to make sure the menu works
 
-        if(user_input == 1): #BEGIN OPTION 1: Add a New Student Record - Matthew Meinhart
+        if(user_input == 1): #BEGIN OPTION 1: Add a New Student Record - Matthew M
 
             print("\n----Add New Student Record----\n")
 
@@ -63,7 +63,7 @@ while application_isactive == True:
                     num_scores_to_add = int( input("How many scores will be added? ") )
                 except ValueError:
                     print("ERROR: input must be convertible to integer.")
-                    input()
+                    input("Press Enter to continue")
                     continue
 
                 i = 1                   #use this to increment once each iteration until i = num_scores_to_add
@@ -88,7 +88,7 @@ while application_isactive == True:
                     print("New ID:", new_id)
                     print("List of students:", student_names)
                     print("Grades for", new_id, "are", student_grades[new_id])
-                    input("Press any key") #we can use input() on its own as a sort of "pause button" to make the program wait for input before continuing
+                    input("Press Enter to continue") #we can use input() on its own as a sort of "pause button" to make the program wait for input before continuing
                                            #do that if you feel like the user needs to see whats going on before the program continues.
 
                 else: #if id already exists, replace name and grades with input
@@ -98,36 +98,38 @@ while application_isactive == True:
                     #debug statements
                     print("List of students:", student_names)
                     print("Grades for", new_id, "are", student_grades[new_id])
-                    input("Press any key")
+                    input("Press Enter to continue")
                 
 
             else:
                 print(f"ERROR: {new_id} not a valid ID")
 
-        if(user_input == 2): #BEGIN OPTION 2: Compute GPAs & Academic Averages - Matthew Meinhart
+        if(user_input == 2): #BEGIN OPTION 2: Compute GPAs & Academic Averages - Matthew M
             #I'm still working on this, it's not finished yet
             if student_grades: #by using student_grades as the if-check, it returns True if the dict contains items. If its empty, returns False
 
                 student_lettergrades = dict() #temporarily create empty dictionary to hold ID-lettergrade pairs
-                
+                print("\n----Compute Student GPAs & Academic Averages----")
                 for stud_id in student_grades:
 
                     gpa_avg = sum(student_grades[stud_id]) / len(student_grades[stud_id]) #calculate gpa in average form
 
-                    for (i, cutoff) in enumerate(GRADE_BOUNDARIES): #i need to study this more
-                        if(gpa_avg >= cutoff): #example: if gpa_avg = 91 then 91 >= 90, student grade is 4.0 - 0 = 4.0
+                    for (i, cutoff) in enumerate(GRADE_BOUNDARIES): #this segment will add a letter grade to the dictionary declared above 
+                        if(gpa_avg >= cutoff): #example: if gpa_avg = 91 then 91 >= 90, student grade is 4.0 - 0 = 4.0 and gets index 0 of letter grades, "A"
                             student_gpas[stud_id] = (4.0 - i)
-                            student_lettergrades[stud_id] = GRADE_LETTERS[i] #this should get "A" for 0, "B" for 1, etc.
+                            student_lettergrades[stud_id] = GRADE_LETTERS[i] #this should produce "A" for 0, "B" for 1, etc.
                             break #break this for loop, or else it will eventually fail and produce an "F"
                         else:
                             student_gpas[stud_id] = (0.0)
                             student_lettergrades[stud_id] = "F" #start work from here later
 
+                    print(f"\nID: {stud_id} | Avg Score: {gpa_avg}% | Letter: {student_lettergrades[stud_id]} | GPA: {student_gpas[stud_id]}")
 
 
 
-                print(student_gpas)
-                print(student_lettergrades)
+
+               # print(student_gpas)
+               # print(student_lettergrades)
 
             else: #since the program is initialized with grades, this should never happen
                 print("Student grades is empty.") 
