@@ -144,6 +144,27 @@ while application_isactive == True:
 
         if(user_input == 4): #BEGIN OPTION 4: Search Student & Flag Academic Risk - your name here
             
+            print("Input Student ID:")
+            while True:
+                try:
+                    intstudent_ids = int(input())
+                    break
+                except ValueError:
+                    print("Invaild")
+            if intstudent_ids in student_ids:
+                ID_p = student_ids.index(intstudent_ids)
+                if ID_p in range(len(student_ids)):
+                    print(f"Name: {student_names[ID_p]}, Grades: {student_grades[student_ids[ID_p]]}, GPA: {student_gpas[student_ids[ID_p]]}")
+                    if student_gpas[student_ids[ID_p]] < 2.0:
+                        print("[AT RISK] Student is on Academic Probation")
+                    elif student_gpas[student_ids[ID_p]] >= 3.5:
+                        print("[EXCELLENT] Student made Honor Roll")
+                    else:
+                        print(["[NORMAL] Student is in Good Standing"])
+            else:
+                    print("[NOTICE] Student ID not found in system")
+
+
             #your code goes here. please only edit inside of your option, so that merging everyone's versions is seamless.
             #please verify that your option works before submitting it to the Github page.
             #don't forget to double check your indentation so that everything is contained correctly.
